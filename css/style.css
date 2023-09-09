@@ -114,9 +114,27 @@ body {
 }
 
 .menu__link {
+	position: relative;
 	color: rgb(115, 255, 0);
 	font-weight: 600;
 	line-height: 24px;
+	text-decoration: none;
+}
+
+.menu__link:after {
+	display: block;
+	position: absolute;
+	left: 0; 
+	width: 0;
+	height: 3px; 
+	background-color: rgb(115, 255, 0); 
+	content: "";
+	transition: width 0.3s ease-out; 
+}
+
+.menu__link:hover:after,
+.menu__link:focus:after {
+	width: 100%; 
 }
 
 .menu__list {
@@ -151,7 +169,7 @@ body {
 }
 
 .main-block__body {
-	padding: 180px 0px 190px 0px;
+	padding: 150px 0px 190px 0px;
 	position: relative;
 	z-index: 2;
 }
@@ -165,6 +183,10 @@ body {
 	line-height: calc(80 / 58 * 100%);
 	letter-spacing: 0.2px;
 	font-weight: 700;
+}
+
+.main-block__hpbar a {
+	color: rgb(255, 0, 0);
 }
 
 .main-block__maindialogue {
