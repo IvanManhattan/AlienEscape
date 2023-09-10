@@ -82,6 +82,8 @@ body {
 	top: 0;
 	left: 0;
 	object-fit: cover;
+	user-select: none;
+	pointer-events: none;
 }
 
 .header {
@@ -213,6 +215,7 @@ body {
    font-family: PixelFont;
 	color: #fff;
 	font-size: 24px;
+	resize: none;
 }
 
 /* !-------------------BUTTON-------------------------- */
