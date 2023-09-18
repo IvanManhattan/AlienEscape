@@ -2,9 +2,9 @@
 const MAP_THIRD_FLOOR =
 	[
 		[1, 1, 1, 99, 1, 1, 1],
-		[1, 0, 2, 0, 0, 0, 3],
-		[1, 0, 2, 2, 2, 2, 10],
-		[1, 4, 2, 0, 0, 0, 0],
+		[1, 0, 2, 0, 0, 0, 1],
+		[1, 0, 99, 2, 2, 2, 3],
+		[1, 4, 2, 0, 0, 0, 10],
 		[1, 0, 0, 0, 9, 1, 1],
 		[1, 0, 0, 0, 1, 0, 1],
 		[1, 4, 1, 1, 1, 1, 1],
@@ -46,7 +46,10 @@ const MAP_FIRST_FLOOR =
 25 - victory
 99 - choose direction  
 */
-const DIRECTION_MOVE = ['Left', 'Top', 'Right', 'Straight'];
+
+const MAX_SIZE = 7;
+
+const DIRECTION_MOVE = ['Left', 'Right', 'Straight'];
 const HELLO_MESSAGE = [
 	"Hello there\nLet's get outta here!\r\n"
 ];
@@ -69,12 +72,28 @@ const START_POSITION_POINT_Y = 0;
 const COLOR_OF_THE_WALLS = ["Green", "Blue", "Red"];
 
 class User {
-	user_position;
-	user_hp;
+	user_positionX;
+	user_positionY;
+	user_hp = 100;
+	user_hasKey_EnginierRoom = false;
+	user_hasKey_Card_lvl_1 = false;
+	user_hasKey_Card_lvl_2 = false;
+	user_hasKey_Card_lvl_3 = false;
+	user_hasSpanner = false;
+	user_hasFlask = false;
+	is_on_the_3_floor = true;
+	is_on_the_2_floor = false;
+	is_on_the_1_floor = false;
 }
+
+// --------------------------------------
 let HAS_ESCAPED = false;
 let FLOOR_START;
+let ELECTRICITY_IS_TURNDED_ON = false;
+let ELEVATOR_IS_TURNDED_ON = false;
+let IS_SPRAYED = false;
 
+let aUser = new User();
 
 function typeText(message) {
 
@@ -144,6 +163,74 @@ function setDefaultButtonText() {
 }
 
 const buttonsBlock = document.querySelector(".main-block__buttons");
+const options = {
+	"capture": false,
+	"once": true,
+	"passive": false,
+}
+
+const user_hp_text = document.querySelector(".main-block__hpbar");
+window.addEventListener("load", () => {
+	user_hp_text.insertAdjacentHTML(
+		'beforeend',
+		`<a>${aUser.user_hp}</a>`
+	);
+});
+
+function enterVen() {
+	let answerIs;
+	typeText(["There is a ven\non the way.\nYou want to enter?"]);
+	allButtons[0].innerHTML = "Yes";
+	allButtons[1].innerHTML = "No";
+	allButtons[2].setAttribute("style", "display: none");
+	allButtons[3].setAttribute("style", "display: none");
+
+	allButtons[0].addEventListener("click", () => {
+		typeText(["Welcome!"]);
+	});
+
+	allButtons[1].addEventListener("click", () => {
+		setDefaultButtonText();
+		doMove();
+	});
+
+	return answerIs;
+}
+
+function doMove() {
+	let direction;
+	let direction_num;
+	//	let aUser = new User();
+	aUser.user_positionX = START_POSITION_POINT_X;
+	aUser.user_positionY = START_POSITION_POINT_Y;
+
+
+	allButtons[0].innerHTML = "Straight";
+	allButtons[1].innerHTML = "Right";
+	allButtons[2].innerHTML = "Left";
+	allButtons[3].innerHTML = "Back";
+
+	//setTimeout(typeText, 5000, CHOOSE_DIRECTION);
+	typeText(CHOOSE_DIRECTION);
+
+	allButtons[0].addEventListener("click", () => {
+
+	}, options);
+
+	allButtons[1].addEventListener("click", () => {
+
+	}, options);
+
+	allButtons[2].addEventListener("click", () => {
+		enterVen();
+
+	}, options);
+
+	allButtons[3].addEventListener("click", () => {
+
+	}, options);
+
+}
 
 function chooseWallColor() {
 	let wallColor;
@@ -154,6 +241,8 @@ function chooseWallColor() {
 	allButtons[3].setAttribute("style", "display: none");
 
 	typeText(CHOOSE_COLOR_OF_THE_WALL);
+
+	// ! make delay to wait until the text is written 
 
 	buttonsBlock.addEventListener("click", (e) => {
 		if (e.target.closest(".main-block__button")) {
@@ -171,9 +260,37 @@ function chooseWallColor() {
 			}
 			setDefaultButtonText();
 			clearDialogueField();
+			let currFloor = ["You are on the " + floor.toString() + " floor..."];
+			typeText(currFloor);
 		}
-	}, true);
-	return floor;
+		allButtons[0].innerHTML = "Ok";
+		allButtons[1].setAttribute("style", "display: none");
+		allButtons[2].setAttribute("style", "display: none");
+		allButtons[3].setAttribute("style", "display: none");
+		allButtons[0].addEventListener("click", (e) => {
+			if (e.target.closest(".main-block__button")) {
+				setDefaultButtonText();
+				clearDialogueField();
+				doMove();
+			}
+		}, options);
+	}, options);
+
+}
+
+function doOkayButton() {
+	allButtons[0].innerHTML = "Ok";
+	allButtons[1].setAttribute("style", "display: none");
+	allButtons[2].setAttribute("style", "display: none");
+	allButtons[3].setAttribute("style", "display: none");
+
+	buttonsBlock.addEventListener("click", (e) => {
+		if (e.target.closest(".main-block__button")) {
+			setDefaultButtonText();
+			clearDialogueField();
+			chooseWallColor();
+		}
+	}, options);
 }
 
 function sayHello() {
@@ -187,8 +304,10 @@ function sayHello() {
 		if (e.target.closest(".main-block__button")) {
 			setDefaultButtonText();
 			clearDialogueField();
+			chooseWallColor();
+
 		}
-	}, true);
+	}, options);
 }
 
 sayHello();
