@@ -2,15 +2,9 @@
 const MAP_THIRD_FLOOR =
 	[
 		[1, 1, 1, 99, 1, 1, 1],
-<<<<<<< HEAD
 		[1, 0, 2, 0, 0, 0, 1],
 		[1, 0, 99, 2, 2, 2, 3],
 		[1, 4, 2, 0, 0, 0, 10],
-=======
-		[1, 0, 2, 0, 0, 0, 3],
-		[1, 0, 2, 2, 2, 2, 10],
-		[1, 4, 2, 0, 0, 0, 0],
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 		[1, 0, 0, 0, 9, 1, 1],
 		[1, 0, 0, 0, 1, 0, 1],
 		[1, 4, 1, 1, 1, 1, 1],
@@ -52,14 +46,10 @@ const MAP_FIRST_FLOOR =
 25 - victory
 99 - choose direction  
 */
-<<<<<<< HEAD
 
 const MAX_SIZE = 7;
 
 const DIRECTION_MOVE = ['Left', 'Right', 'Straight'];
-=======
-const DIRECTION_MOVE = ['Left', 'Top', 'Right', 'Straight'];
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 const HELLO_MESSAGE = [
 	"Hello there\nLet's get outta here!\r\n"
 ];
@@ -82,7 +72,6 @@ const START_POSITION_POINT_Y = 0;
 const COLOR_OF_THE_WALLS = ["Green", "Blue", "Red"];
 
 class User {
-<<<<<<< HEAD
 	user_positionX;
 	user_positionY;
 	user_hp = 100;
@@ -95,13 +84,7 @@ class User {
 	is_on_the_3_floor = true;
 	is_on_the_2_floor = false;
 	is_on_the_1_floor = false;
-=======
-	user_position;
-	user_hp;
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 }
-let HAS_ESCAPED = false;
-let FLOOR_START;
 
 // --------------------------------------
 let HAS_ESCAPED = false;
@@ -180,7 +163,6 @@ function setDefaultButtonText() {
 }
 
 const buttonsBlock = document.querySelector(".main-block__buttons");
-<<<<<<< HEAD
 const options = {
 	"capture": false,
 	"once": true,
@@ -249,8 +231,6 @@ function doMove() {
 	}, options);
 
 }
-=======
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 
 function chooseWallColor() {
 	let wallColor;
@@ -262,11 +242,8 @@ function chooseWallColor() {
 
 	typeText(CHOOSE_COLOR_OF_THE_WALL);
 
-<<<<<<< HEAD
 	// ! make delay to wait until the text is written 
 
-=======
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 	buttonsBlock.addEventListener("click", (e) => {
 		if (e.target.closest(".main-block__button")) {
 			wallColor = e.target.innerText;
@@ -283,7 +260,6 @@ function chooseWallColor() {
 			}
 			setDefaultButtonText();
 			clearDialogueField();
-<<<<<<< HEAD
 			let currFloor = ["You are on the " + floor.toString() + " floor..."];
 			typeText(currFloor);
 		}
@@ -315,11 +291,6 @@ function doOkayButton() {
 			chooseWallColor();
 		}
 	}, options);
-=======
-		}
-	}, true);
-	return floor;
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 }
 
 function sayHello() {
@@ -333,15 +304,10 @@ function sayHello() {
 		if (e.target.closest(".main-block__button")) {
 			setDefaultButtonText();
 			clearDialogueField();
-<<<<<<< HEAD
 			chooseWallColor();
 
 		}
 	}, options);
-=======
-		}
-	}, true);
->>>>>>> ace000b8ccd8345274c085b7adc2a7349369bfac
 }
 
 sayHello();
