@@ -130,6 +130,7 @@ function typeText(message) {
 }
 
 const dialogueArea = document.querySelector(".dialogue-area");
+
 function clearDialogueField() {
 	dialogueArea.innerHTML = "";
 }
@@ -139,6 +140,12 @@ function getRandomInt(max) {
 }
 
 const allButtons = document.querySelectorAll(".main-block__button");
+allButtons[4].setAttribute("style", "display: none");
+allButtons[5].setAttribute("style", "display: none");
+allButtons[6].setAttribute("style", "display: none");
+allButtons[7].setAttribute("style", "display: none");
+const blockOfButtons = document.querySelector(".main-block__buttons");
+
 function loadDirection() {
 	typeText(CHOOSE_DIRECTION);
 	allButtons[0].innerHTML = "Left";
@@ -160,6 +167,10 @@ function setDefaultButtonText() {
 	allButtons[1].setAttribute("style", "display: block");
 	allButtons[2].setAttribute("style", "display: block");
 	allButtons[3].setAttribute("style", "display: block");
+	allButtons[4].setAttribute("style", "display: none");
+	allButtons[5].setAttribute("style", "display: none");
+	allButtons[6].setAttribute("style", "display: none");
+	allButtons[7].setAttribute("style", "display: none");
 }
 
 const buttonsBlock = document.querySelector(".main-block__buttons");
@@ -170,6 +181,8 @@ const options = {
 }
 
 const user_hp_text = document.querySelector(".main-block__hpbar");
+
+// ! rewrite
 window.addEventListener("load", () => {
 	user_hp_text.insertAdjacentHTML(
 		'beforeend',
@@ -177,33 +190,228 @@ window.addEventListener("load", () => {
 	);
 });
 
+// Creating new buttons
+function createButton() {
+	const newButton = document.createElement('a');
+	newButton.className = "main-block__button";
+	return newButton;
+}
+
 function enterVen() {
+	// ! Create new buttons instead of using old ones
 	let answerIs;
-	typeText(["There is a ven\non the way.\nYou want to enter?"]);
-	allButtons[0].innerHTML = "Yes";
-	allButtons[1].innerHTML = "No";
-	allButtons[2].setAttribute("style", "display: none");
-	allButtons[3].setAttribute("style", "display: none");
+	const defaultAnswerVenStart = 4;
+	const defaultAnswerVenEnd = 6;
 
-	allButtons[0].addEventListener("click", () => {
-		typeText(["Welcome!"]);
-	});
+	for (i = 0; i < 4; i++) {
+		allButtons[i].remove();
+	}
 
-	allButtons[1].addEventListener("click", () => {
-		setDefaultButtonText();
+	allButtons[4] = createButton();
+	allButtons[5] = createButton();
+
+	allButtons[4].setAttribute("style", "display: block");
+	allButtons[5].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[4]);
+	blockOfButtons.append(allButtons[5]);
+
+	typeText(["There is a ven on the way.\nYou want to enter?"]);
+	allButtons[4].innerHTML = "Yes";
+	allButtons[5].innerHTML = "No";
+
+	allButtons[4].addEventListener("click", () => {
+		typeText(["Here we go..."]);
+	}, options);
+
+	allButtons[5].addEventListener("click", () => {
+		// !-------------------
 		doMove();
-	});
+	}, options);
 
 	return answerIs;
 }
 
-function doMove() {
-	let direction;
-	let direction_num;
-	//	let aUser = new User();
-	aUser.user_positionX = START_POSITION_POINT_X;
-	aUser.user_positionY = START_POSITION_POINT_Y;
+function toElevator_3_2() {
+	for (i = 0; i < 8; i++) {
+		allButtons[i].remove();
+	}
 
+	if (ELECTRICITY_IS_TURNDED_ON == true) {
+		allButtons[4] = createButton();
+		allButtons[5] = createButton();
+		allButtons[4].setAttribute("style", "display: block");
+		allButtons[5].setAttribute("style", "display: block");
+		blockOfButtons.append(allButtons[4]);
+		blockOfButtons.append(allButtons[5]);
+
+		typeText(["There is an \nYou want to come in?"]);
+		allButtons[4].innerHTML = "Yes";
+		allButtons[5].innerHTML = "No";
+	} else {
+		typeText(["Without electricity, the lifts won't work.....\nWe should look around"]);
+		// !
+		doMove();
+	}
+
+
+
+}
+
+function toLab() {
+	for (i = 0; i < 8; i++) {
+		allButtons[i].remove();
+	}
+
+	allButtons[4] = createButton();
+	allButtons[5] = createButton();
+	allButtons[4].setAttribute("style", "display: block");
+	allButtons[5].setAttribute("style", "display: block");
+	blockOfButtons.append(allButtons[4]);
+	blockOfButtons.append(allButtons[5]);
+
+	typeText(["There is a lab\nYou want to come in?"]);
+	allButtons[4].innerHTML = "Yes";
+	allButtons[5].innerHTML = "No";
+
+	allButtons[4].addEventListener("click", () => {
+		if (aUser.user_hasSpanner == true) {
+			typeText(["Yes!\nNow it looks like you might be able to open some doors"]);
+			aUser.user_hasKey_Card_lvl_1 = true;
+			doMove();
+		} else {
+			typeText(["Some kind of device covered by a grate.\nYou can't open it without a tool"]);
+		}
+	}, options);
+
+	allButtons[5].addEventListener("click", () => {
+		// !
+		toElevator_3_2();
+	}, options);
+
+}
+
+function toTheStairsOrVen() {
+	for (i = 0; i < 4; i++) {
+		allButtons[i].remove();
+	}
+
+	allButtons[4] = createButton();
+	allButtons[5] = createButton();
+	allButtons[6] = createButton();
+
+	allButtons[4].setAttribute("style", "display: block");
+	allButtons[5].setAttribute("style", "display: block");
+	allButtons[6].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[4]);
+	blockOfButtons.append(allButtons[5]);
+	blockOfButtons.append(allButtons[6]);
+
+	typeText(["There is a ven and the stairs on the way.\nWhere you want to go?"]);
+	allButtons[4].innerHTML = "Ven";
+	allButtons[5].innerHTML = "Stairs";
+	allButtons[6].innerHTML = "Back";
+
+	allButtons[4].addEventListener("click", () => {
+		typeText(["Here we go..."]);
+	}, options);
+
+	allButtons[5].addEventListener("click", () => {
+		typeText(["We are on the 2nd floor.."]);
+		is_on_the_3_floor = false;
+		is_on_the_2_floor = true;
+		doMove_2_stairs();
+	}, options);
+
+	allButtons[6].addEventListener("click", () => {
+		doMove();
+	}, options);
+
+
+}
+
+function doMove_2_stairs() {
+
+	typeText(["There's a room here.\nI think the door's open,\ndo you want to come in?"]);
+
+}
+
+function afterEnginieringToLabOr() {
+	setDefaultButtonText();
+	clearDialogueField();
+	typeText(["Get back or keep on moving?.."]);
+	allButtons[0].innerHTML = "Straight";
+	allButtons[1].setAttribute("style", "display: none");
+	allButtons[2].setAttribute("style", "display: none");
+	allButtons[3].innerHTML = "Back";
+}
+
+function toEnginierRoom() {
+
+	for (i = 0; i < 8; i++) {
+		allButtons[i].remove();
+	}
+
+	allButtons[4] = createButton();
+	allButtons[5] = createButton();
+	allButtons[4].setAttribute("style", "display: block");
+	allButtons[5].setAttribute("style", "display: block");
+	blockOfButtons.append(allButtons[4]);
+	blockOfButtons.append(allButtons[5]);
+
+	typeText(["There is an enginiering room.\nYou want to come in?"]);
+	allButtons[4].innerHTML = "Yes";
+	allButtons[5].innerHTML = "No";
+
+	allButtons[4].addEventListener("click", () => {
+
+		if (ELECTRICITY_IS_TURNDED_ON == true) {
+			// ! Write a script
+			typeText(["There is a key\nYou want to take it?"]);
+		} else {
+			typeText(["The door is locked...\nGotta open this somehow..."]);
+		}
+	}, options);
+
+	allButtons[5].addEventListener("click", () => {
+		// ! Write to lab and lift
+		toLab();
+	}, options);
+
+}
+
+function removeButtons() {
+	for (let i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+}
+
+function doMove() {
+	//let direction;
+	//let direction_num;
+	//	let aUser = new User();
+	//aUser.user_positionX = START_POSITION_POINT_X;
+	//aUser.user_positionY = START_POSITION_POINT_Y;
+	let i;
+
+	let defaultLengthBlockOfButtons = allButtons.length;
+	let defaultCountOfChoiceToMove = 4;
+
+	for (i = 0; i < 8; i++) {
+		allButtons[i].remove();
+	}
+
+	for (i = 0; i < defaultCountOfChoiceToMove; i++) {
+		allButtons[i] = createButton();
+	}
+
+	for (i = 0; i < defaultLengthBlockOfButtons; i++) {
+		blockOfButtons.append(allButtons[i]);
+	}
+
+	setDefaultButtonText();
+	clearDialogueField();
 
 	allButtons[0].innerHTML = "Straight";
 	allButtons[1].innerHTML = "Right";
@@ -214,20 +422,19 @@ function doMove() {
 	typeText(CHOOSE_DIRECTION);
 
 	allButtons[0].addEventListener("click", () => {
-
+		enterVen();
 	}, options);
 
 	allButtons[1].addEventListener("click", () => {
-
+		toEnginierRoom();
 	}, options);
 
 	allButtons[2].addEventListener("click", () => {
-		enterVen();
-
+		toTheStairsOrVen();
 	}, options);
 
 	allButtons[3].addEventListener("click", () => {
-
+		typeText(["Oui!?\nWe just got here!\nYou want to sit 'ere and do nothin'?\nLet's get out!"]);
 	}, options);
 
 }
