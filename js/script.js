@@ -86,6 +86,7 @@ class User {
 	is_on_the_3_floor = true;
 	is_on_the_2_floor = false;
 	is_on_the_1_floor = false;
+	was_in_garden = false;
 }
 
 // --------------------------------------
@@ -189,6 +190,14 @@ allButtons[44].setAttribute("style", "display: none");
 allButtons[45].setAttribute("style", "display: none");
 allButtons[46].setAttribute("style", "display: none");
 allButtons[47].setAttribute("style", "display: none");
+allButtons[48].setAttribute("style", "display: none");
+allButtons[49].setAttribute("style", "display: none");
+allButtons[50].setAttribute("style", "display: none");
+allButtons[51].setAttribute("style", "display: none");
+allButtons[52].setAttribute("style", "display: none");
+allButtons[53].setAttribute("style", "display: none");
+allButtons[54].setAttribute("style", "display: none");
+allButtons[55].setAttribute("style", "display: none");
 const blockOfButtons = document.querySelector(".main-block__buttons");
 
 function loadDirection() {
@@ -257,6 +266,15 @@ function setDefaultButtonText() {
 	allButtons[45].setAttribute("style", "display: none");
 	allButtons[46].setAttribute("style", "display: none");
 	allButtons[47].setAttribute("style", "display: none");
+
+	allButtons[48].setAttribute("style", "display: none");
+	allButtons[49].setAttribute("style", "display: none");
+	allButtons[50].setAttribute("style", "display: none");
+	allButtons[51].setAttribute("style", "display: none");
+	allButtons[52].setAttribute("style", "display: none");
+	allButtons[53].setAttribute("style", "display: none");
+	allButtons[54].setAttribute("style", "display: none");
+	allButtons[55].setAttribute("style", "display: none");
 }
 
 const buttonsBlock = document.querySelector(".main-block__buttons");
@@ -520,6 +538,7 @@ function inTheCP() {
 	for (i = 0; i < allButtons.length; i++) {
 		allButtons[i].remove();
 	}
+	typeText(["The elevator is working now\nWe can move on the 1st floor"]);
 
 	allButtons[25] = createButton();
 
@@ -529,7 +548,6 @@ function inTheCP() {
 
 	allButtons[25].innerHTML = "Done";
 
-	typeText(["The elevator is working now\nWe can move on the 1st floor"]);
 
 	allButtons[25].addEventListener("click", () => {
 		ELEVATOR_IS_TURNDED_ON = true;
@@ -545,8 +563,8 @@ function toTheCP() {
 	allButtons[22] = createButton();
 	allButtons[23] = createButton();
 
-	blockOfButtons.append(allButtons[20]);
-	blockOfButtons.append(allButtons[21]);
+	blockOfButtons.append(allButtons[22]);
+	blockOfButtons.append(allButtons[23]);
 
 	allButtons[22].setAttribute("style", "display: block");
 	allButtons[23].setAttribute("style", "display: block");
@@ -561,7 +579,7 @@ function toTheCP() {
 	}, options);
 
 	allButtons[23].addEventListener("click", () => {
-		// TODO
+		doMove_2_elevator();
 	}, options);
 }
 
@@ -589,7 +607,7 @@ function toTheFreeze() {
 	}, options);
 
 	allButtons[21].addEventListener("click", () => {
-		// TODO
+		doMove_2_elevator();
 	}, options);
 }
 
@@ -634,8 +652,109 @@ function doMove_2_elevator() {
 	}, options);
 
 	allButtons[19].addEventListener("click", () => {
-		// TODO 	
+		elevator2_3();
 	}, options);
+
+}
+
+function elevator2_3() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+
+	allButtons[49] = createButton();
+
+	allButtons[49].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[49]);
+
+	allButtons[49].innerHTML = "Go";
+
+	allButtons[49].addEventListener("click", () => {
+		enemy_3_event();
+	}, options)
+}
+
+function enemy_3_event() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+
+	typeText(["Enemy on the way!\nTWe can fight back or hide\nWhat to do?"]);
+	let fight_back;
+
+	allButtons[50] = createButton();
+	allButtons[51] = createButton();
+
+	allButtons[50].setAttribute("style", "display: block");
+	allButtons[51].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[50]);
+	blockOfButtons.append(allButtons[51]);
+
+	allButtons[50].innerHTML = "Fight!";
+	allButtons[51].innerHTML = "Hide";
+
+	allButtons[50].addEventListener("click", () => {
+		aUser.user_hp -= 25;
+		fight_back = true;
+		go_to_2_floor(fight_back);
+	}, options);
+
+	allButtons[51].addEventListener("click", () => {
+		fight_back = false;
+		go_to_2_floor(fight_back);
+	}, options);
+
+}
+
+function go_to_2_floor(fight_back) {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	if (fight_back == true) {
+		typeText(["That was insane!\nThank God we still alive!"]);
+	} else {
+		typeText(["So he didn't see us"]);
+	}
+
+	allButtons[52] = createButton();
+
+	allButtons[52].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[52]);
+
+	allButtons[52].innerHTML = "Ok";
+
+	allButtons[52].addEventListener("click", () => {
+		elevator2_1();
+	}, options);
+}
+
+function elevator2_1() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	if (ELEVATOR_IS_TURNDED_ON == true) {
+		typeText(["Now to the 1 floor"]);
+		allButtons[53].addEventListener("click", () => {
+			doMove_1();
+		}, options);
+	} else {
+		typeText(["First of all, we need to turn on the elevator"]);
+		allButtons[53].addEventListener("click", () => {
+			doMove();
+		}, options);
+	}
+
+	allButtons[53] = createButton();
+
+	allButtons[53].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[53]);
+
+	allButtons[53].innerHTML = "Ok";
+
 
 }
 
@@ -678,15 +797,84 @@ function doMove_2_stairs() {
 }
 
 function toRestRoom() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	allButtons[43] = createButton();
 
+	allButtons[43].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[43]);
+
+	allButtons[43].innerHTML = "Ok";
+
+	typeText(["Statue. There's something written on the base\nMaybe..."]);
+
+	allButtons[43].addEventListener("click", () => {
+		doMove_1();
+	}, options);
 }
 
 function inTheGarden() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	aUser.was_in_garden = true;
 
+	allButtons[45] = createButton();
+
+	allButtons[45].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[45]);
+
+	allButtons[45].innerHTML = "Exit";
+
+	typeText(["It's like a garden\nUnexplained plants holding a map\nYou can't just take it\nWe have to get the plants to let it go."])
+
+	if (aUser.user_hasFlask == true) {
+		allButtons[44] = createButton();
+		allButtons[44].setAttribute("style", "display: block");
+		blockOfButtons.append(allButtons[44]);
+		allButtons[44].innerHTML = "Spray";
+
+		allButtons[44].addEventListener("click", () => {
+			aUser.user_hasKey_Card_lvl_3 = true;
+			doMove_1();
+		}, options);
+	}
+
+	allButtons[45].addEventListener("click", () => {
+		doMove_1();
+	}, options);
 }
 
 function inTheLab_1_floor() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
 
+	let mes;
+
+	if (aUser.was_in_garden == true) {
+		mes = ["So here is the flask"];
+		aUser.user_hasFlask = true;
+	} else {
+		mes = ["There is nothing to do here\nGood that we turn on the light at least"];
+	}
+
+	typeText(mes);
+
+	allButtons[46] = createButton();
+
+	allButtons[46].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[46]);
+
+	allButtons[46].innerHTML = "Ok";
+
+	allButtons[46].addEventListener("click", () => {
+		doMove_1();
+	}, options);
 }
 
 function toGardenOrGLCP() {
@@ -719,10 +907,75 @@ function toGardenOrGLCP() {
 
 function toTheEscape() {
 	// TODO Enemy
-
-	if (aUser.user_hasKey_Card_lvl_3 == true) {
-
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
 	}
+	if (aUser.user_hasKey_Card_lvl_3 == true) {
+		enemy_1_event();
+	} else {
+		typeText(["It seems like we need a lvl 3 card\nShould look around"]);
+
+		allButtons[48] = createButton();
+
+		allButtons[48].setAttribute("style", "display: block");
+
+		blockOfButtons.append(allButtons[48]);
+
+		allButtons[48].innerHTML = "Ok";
+
+		allButtons[48].addEventListener("click", () => {
+			doMove_1();
+		}, options);
+	}
+
+}
+
+function enemy_1_event() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	typeText(["Enemy on the way!\nThis is our last escape\nMove on!"]);
+
+	allButtons[47] = createButton();
+
+	allButtons[47].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[47]);
+
+	allButtons[47].innerHTML = "Defend!";
+
+	allButtons[47].addEventListener("click", () => {
+		if (aUser.user_hp >= 40) {
+			victoryFinish();
+		} else {
+			loseFinish();
+		}
+	}, options);
+}
+
+// TODO
+function victoryFinish() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	typeText(["Congratulations! You won!\n^-^\nReatart page if you want to start again"]);
+
+	allButtons[55] = createButton();
+
+	allButtons[55].setAttribute("style", "display: block");
+
+	blockOfButtons.append(allButtons[55]);
+
+	allButtons[55].innerHTML = "Yay!";
+
+
+}
+
+function loseFinish() {
+	for (i = 0; i < allButtons.length; i++) {
+		allButtons[i].remove();
+	}
+	typeText(["Sorry, but we lost\nReatart page if you want to start again"]);
 
 }
 
@@ -757,8 +1010,14 @@ function doMove_1() {
 	allButtons[29].innerHTML = "Back";
 
 	//setTimeout(typeText, 5000, CHOOSE_DIRECTION);
-	typeText(["We are on the 1st floor\nThere is a room in opposite side\nAlthought, there are 2 rooms on the right side\nand a corridor on the left\nWhere to go?"]);
-
+	if (aUser.user_hasKey_Card_lvl_3 == true) {
+		allButtons[26].setAttribute("style", "display: none");
+		allButtons[27].setAttribute("style", "display: none");
+		allButtons[29].setAttribute("style", "display: none");
+		typeText(["Now let's get out!"]);
+	} else {
+		typeText(["We are on the 1st floor\nThere is a room in opposite side\nAlthought, there are 2 rooms on the right side\nand a corridor on the left\nWhere to go?"]);
+	}
 	allButtons[26].addEventListener("click", () => {
 		toRestRoom();
 	}, options);
