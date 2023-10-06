@@ -1,0 +1,117 @@
+@font-face {
+	font-family: 'PixelFont';
+	src: url('../fonts/Videotype.woff2') format('woff2'),
+		 url('../fonts/Videotype.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/*Обнуление*/
+*{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+*,*:before,*:after{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+
+nav,footer,header,aside{display: block;}
+
+html,body{
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,button,textarea{font-family:inherit;}
+
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top;}
+
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+
+/*--------------------*/
+
+html,
+body {
+	height: 100%;
+	background-color: #333;
+/*	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; */
+	font-family: PixelFont;
+	color: #fff;
+	font-size: 16px;
+}
+
+.wrapper {
+	min-height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+._container {
+	max-width: 800px;
+	padding: 0px 15px;
+	margin: 0px auto;
+	box-sizing: content-box;
+}
+
+._ibg img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	user-select: none;
+	pointer-events: none;
+}
+
+.header {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	z-index: 50;
+}
+
+.header__container {
+	display: flex;
+	min-height: 100px;
+	align-items: center;
+}
+
+.header__logo {
+	font-size: 32px;
+	font-weight: 700;
+	color: inherit;
+	color: rgb(255, 255, 0)
+}
+
+.header__author {
+	font-size: 24px;
+	font-weight: 700;
+	color: inherit;
+	color: rgb(255, 0, 89)
+}
+
+.header__container {
+	display: flex;
+	min-height: 100px;
+	align-items: center;
+	justify-content: space-between;
+}
